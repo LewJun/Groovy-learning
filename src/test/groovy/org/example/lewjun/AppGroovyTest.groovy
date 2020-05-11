@@ -37,4 +37,41 @@ class GroovyTest extends GroovyTestCase {
         assert "1".equals("1")
     }
 
+    /**
+     * String的使用
+     */
+    void testString() {
+        def n = 5
+
+        def str1 = "${n * 5}str1$n"
+        println str1 // 25str15
+        println str1[2..2] // s str1[2]的用法是错误的
+
+        def str2 = '${n * 5}str1$n'
+        println str2 // ${n * 5}str1$n
+
+        println str1.getClass() // class org.codehaus.groovy.runtime.GStringImpl
+        str1 << "hello world" // 赋值，但是不能改变数据
+        println str1 // 25str15
+
+        str1 <<= "Hello World" // 赋值并修改数据
+        println str1 // 25str15Hello World
+        println str1.getClass() // class java.lang.StringBuilder
+
+        str1[3..3] = 3 // 修改第3..3的元素为3
+        println str1[2] // s
+        println str1[-2] // l 倒数第2个元素
+        println str1 // 25s3r15Hello World
+        println str1.size() // 长度
+        println str1.contains("3")
+        println str1.reverse() // dlroW olleH51r3s52
+
+        def fmtStr = '''《静夜思》"李白" // 格式化字符串，会按照3引号中的内容原样输出
+床前明月光，
+疑似地上霜。
+举头望明月，
+低头思故乡。
+'''
+        println fmtStr
+    }
 }
