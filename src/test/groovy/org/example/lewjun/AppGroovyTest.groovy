@@ -27,4 +27,14 @@ class GroovyTest extends GroovyTestCase {
         println 123.plus(2)
     }
 
+    /**
+     * Groovy 中==等价于 Java 中的equals方法
+     */
+    void testEquals() {
+        assert 1 == 1
+        // Groovy 中==等价于 Java 中的equals方法
+        assert "1" == "1"
+        assert "1".equals("1")
+    }
+
 }
