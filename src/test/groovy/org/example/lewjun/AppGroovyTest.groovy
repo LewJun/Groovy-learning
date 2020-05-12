@@ -306,4 +306,87 @@ class AppGroovyTest extends GroovyTestCase {
         wordFrequency = wordFrequency.sort { a, b -> b.value <=> a.value }
         println wordFrequency
     }
+
+    void testClosure() {
+        def closure1 = { it -> println it }
+        closure1 "hahaha"
+        println closure1.class
+
+        def map = [a: 1, b: 2, c: 3]
+        map.each { key, value ->
+            map[key] = value * 2
+        }
+        println map
+
+        def doubler = { String key, Integer value -> map[key] = value * 2 }
+        map.each(doubler)
+        println map
+
+        def adder = { x, y -> return x + y }
+        println adder(3, 5)
+        println adder.call(3, 2)
+        benchmark(10) {
+            println "aaaaaaaaaaa"
+            println "bbbbbbbbbbb"
+        }
+
+//        benchmark(10000, {it/2})
+
+        def closure = { println it }
+        eachLine('a'..'z', closure)
+        eachLine('z'..'a') { println it }
+        eachLine([2, 3, 4, 5, 6], closure)
+
+        println caller { a, b, c -> }
+        println caller { b, c -> }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:2.1.2'
+        }
+
+//        task clean(type: Delete) {
+//            delete rootProject.buildDir
+//        }
+
+        task()
+
+    }
+
+    def task(String taskName) {
+        println "execute task $taskName"
+    }
+
+    def clean(Map type, Closure closure) {
+        type.type
+        closure.call()
+    }
+
+    def delete(String path) {
+        println "delete $path"
+    }
+
+    private static long benchmark(int repeat, Closure worker) {
+        def start = System.currentTimeMillis()
+        repeat.times { worker(it) }
+        def stop = System.currentTimeMillis()
+        return stop - start
+    }
+
+    private static def eachLine(lines, closure) {
+        for (String line : lines) {
+            closure(line)
+        }
+    }
+
+    def caller(Closure closure) {
+        closure.getParameterTypes().size()
+    }
+
+    def dependencies(Closure closure) {
+        closure.call()
+    }
+
+    def classpath(String path) {
+        println path
+    }
 }
