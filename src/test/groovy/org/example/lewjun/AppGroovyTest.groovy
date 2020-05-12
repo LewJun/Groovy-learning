@@ -116,4 +116,45 @@ class AppGroovyTest extends GroovyTestCase {
         println((x.asType(String).class))
     }
 
+    /**
+     * ranges的使用
+     */
+    void testRanges() {
+        def nums = 5..20 //new IntRange(5, 20)
+        println(nums.from)
+        println(nums.to)
+        println(nums instanceof Range<Integer>)
+
+        5..20.each {
+            print "$it "
+        }
+
+        println("---------")
+
+        ('a'..'z').reverseEach { print "$it " }
+
+        // 'Z'..<'A' 不包含A
+        'z'..<'a'.eachWithIndex { entry, index ->
+            println("$index -> $entry")
+        }
+
+        println("-------------")
+        println((5..20).contains(10))
+
+        def age = 18
+        switch (age) {
+            case 1..17:
+                println("1..17")
+                break
+            case 18..100:
+                println("18..100")
+                break
+            default:
+                break
+        }
+
+        def ages = [20, 36, 42, 56, 72]
+        println(ages.grep(21..50)) // [36, 42]
+    }
+
 }
