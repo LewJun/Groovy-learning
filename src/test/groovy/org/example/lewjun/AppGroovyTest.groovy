@@ -1,6 +1,6 @@
 package org.example.lewjun
 
-class GroovyTest extends GroovyTestCase {
+class AppGroovyTest extends GroovyTestCase {
     /**
      * 变量
      */
@@ -74,4 +74,46 @@ class GroovyTest extends GroovyTestCase {
 '''
         println fmtStr
     }
+
+    /**
+     * 操作符的使用
+     */
+    void testOpr() {
+        // + - * / % ** > < == *. n++ ++n as
+        def x = 3
+        def y = 4
+        def z = 5
+        println(x + y)
+        println(x - y)
+        println(x * y)
+        println(x / y)
+        println(x % y)
+        println(x**y)
+        println(x > y)
+        println(x >= y)
+        println(x < y)
+        println(x <= y)
+        println(x <=> y) // x.compareTo(b)
+        println(x * x + y * y == z * z)
+
+        println(x++) // 3 后++ 数字在前，操作符在后，先赋值，再操作，所以此行 x还是 3
+        println(x) // 4
+        println(++y) // 5 前++ 数字在后，操作符在前，先操作，再赋值，所以此行 y是5
+        println(y) // 5
+
+        // *.
+        String[] words = ["hello", "world"]
+        println words*.toUpperCase()
+
+        println "triple" * 3 // tripletripletriple
+
+        // “==”操作符表示两个数的值等价（“==”号调用了对象的 equals 进行比较），而不是判断引用是否相等
+        println("abc" == "abc") // true
+        println("111" == 111) // false
+
+        // as
+        println((x as String).class)
+        println((x.asType(String).class))
+    }
+
 }
