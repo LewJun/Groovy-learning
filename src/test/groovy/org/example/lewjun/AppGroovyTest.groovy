@@ -246,4 +246,64 @@ class AppGroovyTest extends GroovyTestCase {
         // countries 可以用于并发访问
         def countries = ['China', 'Japan', "India"].asSynchronized()
     }
+
+    void testMaps() {
+        def emptyMap = [:]
+        println emptyMap.getClass() // LinkedHashMap
+
+        def map1 = [
+                a: 1,
+                b: 2
+        ]
+
+        println map1
+        println map1['a'] // 推荐写法
+        println map1.a
+        println map1.keySet()
+        println map1.values()
+
+        // 修改或添加元素
+        map1['c'] = 3 // 推荐写法
+        map1.d = 4
+//        遍历
+        map1.each {
+            println "${it.key}, ${it.value}"
+        }
+        map1.each { key, value ->
+            println "$key -- $value"
+        }
+
+
+        def oddMap = map1.findAll { key, value ->
+            value % 2 == 0
+        }
+
+        println oddMap
+
+        // 根据key来得到子map
+        def acMap = map1.subMap(['a', 'c'])
+        println acMap
+
+        def doubledList = map1.collect {
+            it.value * 2
+        }
+
+        println doubledList
+
+        oddMap.clear()
+
+
+        def textCorpus = """a b c d e a e f c d b a c
+"""
+        def words = textCorpus.tokenize()
+        println words
+        def wordFrequency = [:]
+        words.each {
+            wordFrequency[it] = (wordFrequency[it] ?: 0) + 1
+        }
+
+        // 对value进行排序
+        wordFrequency = wordFrequency.sort { a, b -> b.value <=> a.value }
+        println wordFrequency
+    }
 }
