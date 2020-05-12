@@ -157,4 +157,93 @@ class AppGroovyTest extends GroovyTestCase {
         println(ages.grep(21..50)) // [36, 42]
     }
 
+    /**
+     * lists的使用
+     */
+    void testLists() {
+        def emptyList = []
+        def nums = [1, 2, 3, 4, 5, 6]
+        println(nums.class) // 声明的list默认是ArrayList
+        def nums2 = nums as LinkedList // 可以使用as转为LinkedList
+        println(nums2.class)
+
+        // 将range转换为list
+        assert (5..20).toList()
+
+        // 获取大小
+        println nums2.size()
+
+        // 修改值
+        nums2[2] = 22
+
+        println(nums2)
+        println nums2.grep(2..4) // 注意grep检索内容为2，3，4的数值
+        println nums2[2, 3] // 检索下标为2和3的数值
+        println nums2[1..-2] // 检索下标1到倒数第2个数值
+        println nums2.contains(22)
+
+        // 向list添加数据
+        nums2 << 100 << 101 << 102
+        nums2.add(200)
+        nums2.addAll([300, 400])
+        // 使用这种方式添加两个元素
+        nums2 += [500, 600]
+        // remove元素
+        nums2 -= [300, 900]
+        nums2.removeElement(400)
+        println nums2.class
+        // 会报下标越界的异常 400被当成了下标，而不是被当作元素
+//        nums2.remove(400)
+
+        println(nums2)
+
+        println(nums2[0])
+        println(nums2.first)
+        println(nums2.last)
+        println(nums2[-1])
+
+        println(nums2.sum())
+
+        def nums3 = nums2 as Integer[]
+        println(nums3)
+        println(nums3.class)
+
+//        nums3 << 500 // error 数组的长度是定了的，不能改变
+
+        println(nums3)
+
+        println([1, 2, [3, 4, 5], 6, [7, 8]].flatten())// 将list展开[1,2,3,4,5,6,7,8]
+
+        // 移除并返回第1个元素
+        println nums2.pop()
+        println nums2
+        println nums2.sort()
+
+        println([1, 2, 3].collect { it * 2 })
+
+        def odd = [1, 2, 3].findAll { item ->
+            item % 2 == 1
+        }
+
+        assert odd == [1, 3]
+
+        println([1, 2, 3].disjoint([2, 5, 8]))
+
+        println nums2.join('-')
+
+        println(nums2.every { it > 20 }) // 所有
+        println(nums2.any { it > 20 })// 任意一个
+
+        // inject方法来自Smalltalk，这个方法使用闭包注入一个新的函数，这个函数用来对一个中间结果和遍历的当前元素进行操作，inject方
+        //法的第一个参数是中间结果的初始值
+        println([4, 2, 3].inject { acc, val -> acc * val }) // 4 * 2 * 3
+        println([4, 2, 3].inject { acc, val -> acc + val }) // 4 + 2 + 3
+
+        // fruits 将被不允许修改里面的元素
+        def fruits = ["apple", "orange"].asImmutable()
+//        fruits.add("banana") // error UnsupportedOperationException
+        println fruits
+        // countries 可以用于并发访问
+        def countries = ['China', 'Japan', "India"].asSynchronized()
+    }
 }
