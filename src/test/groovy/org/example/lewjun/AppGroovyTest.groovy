@@ -389,4 +389,115 @@ class AppGroovyTest extends GroovyTestCase {
     def classpath(String path) {
         println path
     }
+
+    /**
+     * 控制语句
+     */
+    void testControl() {
+        if (!null) {
+            println "condition is null"
+        }
+
+        if (!0) {
+            println("condition is 0")
+        }
+
+        if (!'') {
+            println("condition is blank str")
+        }
+
+        if (![]) {
+            println("condition is []")
+        }
+
+        if (![:]) {
+            println "condition is [:]"
+        }
+
+        // ?:的使用
+        Emp emp = null
+        println emp ?: new Emp()
+        println emp?.deptno ?: "null"
+
+        // 编译失败
+//        if (emp = new Emp(empno: 7399, ename: 'King')) {
+//            println emp.ename
+//        }
+
+        // 可以加一个()试试，其实，把一个赋值运算放到if上，没什么意义
+        if ((emp = new Emp(empno: 7399, ename: 'King'))) {
+            println emp.ename
+        }
+
+        def x = 5
+        switch (x) {
+
+            case 1..4:
+                println "1..4"
+                break
+
+            case Integer:
+                println "Integer"
+                break
+
+            case [2, 5, 8]:
+                println "[2,5,8]"
+                break
+
+            case ~/\d/:
+                println "符合正则表达式"
+                break
+
+            default:
+                println "其它情况"
+                break
+        }
+
+        def list = [1, 1, 2, 3, 5, 8, 13, 21]
+        // while
+        while (list) {
+            list.remove(0)
+        }
+
+        println list
+
+        while (list.size() < 3) {
+            list << list.size() + 1
+        }
+
+        println list
+
+        // for
+        for (nu in 'a'..'d') {
+            println nu
+        }
+
+        // each
+        list.each {
+            println it
+        }
+
+        "abc".each {
+            println it
+        }
+
+        def matcher = '59xy378' =~ /\D/ // 匹配非数字
+        for (match in matcher) {
+            // 输出每一个匹配到的
+            println "matched $match"
+        }
+
+        for (nvl in null) {
+            println "This will not be printed"
+        }
+
+        for (obj in new Emp(ename: "King", empno: 72)) {
+            println obj // 打印对象的信息
+        }
+
+        (0.1..1.0).each {
+            println it
+        }
+
+    }
 }
