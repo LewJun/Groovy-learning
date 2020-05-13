@@ -2,6 +2,8 @@ package org.example.lewjun
 
 import org.example.lewjun.Emp as EmpAlias
 
+import java.util.concurrent.TimeUnit
+
 // 类型别名
 class AppGroovyTest extends GroovyTestCase {
     /**
@@ -596,6 +598,21 @@ class AppGroovyTest extends GroovyTestCase {
         Class clazz = groovyClassLoader.parseClass(script)
         clazz.getMethod("hello").invoke(clazz.newInstance())
         clazz.getMethod("world").invoke(clazz.newInstance())
+    }
+
+    /**
+     * groovy.util.GroovyScriptEngine能够处理任何 Groovy 代码的动态编译与加载，可以从统一的位置加载脚本，并且能够监听脚本的变化，当脚本发生变化时会重新加载。
+     */
+    void testGroovyScriptEngine() {
+        GroovyScriptEngine groovyScriptEngine = new GroovyScriptEngine("script/groovy")
+        Binding binding = new Binding()
+        binding.setVariable("empno", 7369)
+        while (1) {
+            // hello.groovy println "hello $empno"
+            groovyScriptEngine.run("file:/d:/hello.groovy", binding)
+            TimeUnit.SECONDS.sleep(1)
+            // 这里，在运行的过程中，修改hello.groovy
+        }
     }
 
 }
