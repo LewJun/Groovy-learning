@@ -2,6 +2,10 @@ package org.example.lewjun
 
 import org.example.lewjun.Emp as EmpAlias
 
+import javax.script.Bindings
+import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
+import javax.script.SimpleBindings
 import java.util.concurrent.TimeUnit
 
 // 类型别名
@@ -613,6 +617,19 @@ class AppGroovyTest extends GroovyTestCase {
             TimeUnit.SECONDS.sleep(1)
             // 这里，在运行的过程中，修改hello.groovy
         }
+    }
+
+    /**
+     * JSR-223 是 Java 中调用脚本语言的标准 API。从 Java 6 开始引入进来，主要目的是用来提供一种统一的框架，
+     * 以便在 Java 中调用多种脚本语言。
+     * JSR-223 支持大部分流行的脚本语言，比如JavaScript、Scala、JRuby、Jython和Groovy等。
+     */
+    void testJSR223() {
+        ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("JavaScript")
+        Bindings bindings = new SimpleBindings()
+        bindings.put("age", 22)
+        Object result = scriptEngine.eval("if (age < 18) {'未成年'} else {'成年'}", bindings)
+        println result
     }
 
 }
