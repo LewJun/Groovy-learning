@@ -1,9 +1,12 @@
 package org.example.lewjun
 
+import groovy.transform.ToString
+
 /**
  * 雇员信息
  * @author LewJun
  */
+@ToString
 class Emp {
     int empno
     String ename
@@ -17,5 +20,9 @@ class Emp {
 
     String display() {
         return "I am $ename, my empno is $empno"
+    }
+
+    void fuck() {
+        println "fuck"
     }
 }

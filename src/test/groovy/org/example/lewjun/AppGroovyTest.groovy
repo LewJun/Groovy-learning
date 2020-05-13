@@ -1,5 +1,8 @@
 package org.example.lewjun
 
+import org.example.lewjun.Emp as EmpAlias
+
+// 类型别名
 class AppGroovyTest extends GroovyTestCase {
     /**
      * 变量
@@ -499,5 +502,33 @@ class AppGroovyTest extends GroovyTestCase {
             println it
         }
 
+    }
+
+    /**
+     * 面向对象使用
+     */
+    void testOO() {
+        Emp emp = new Emp(weight: 65f, height: 172f, sex: true)
+        emp.empno = 7369
+        emp.ename = 'SMITH'
+        emp.job = 'CLERK'
+        emp.deptno = 20
+        emp.setMgr(7902) // set
+        Date date = new Date()
+        date.setYear(1980)
+        date.setMonth(12)
+        date.setDate(17)
+        emp.hiredate = date
+
+        println emp
+        println emp.ename // .访问方式
+        println emp['job'] // 属性访问方式
+        println emp.getEname() // get
+
+        println emp.display()
+
+        EmpAlias empAlias = new EmpAlias(ename: 'import Emp as EmpAlias 类型别名')
+        println empAlias
+        empAlias.fuck()
     }
 }
