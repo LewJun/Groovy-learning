@@ -563,4 +563,25 @@ class AppGroovyTest extends GroovyTestCase {
 
         println Eval.x("Hello world", "x.toUpperCase()") // HELLO WORLD
     }
+
+    /**
+     * GroovyShell的使用
+     */
+    void testGroovyShell() {
+        // groovy.lang.GroovyShell除了可以执行 Groovy 代码外，提供了更丰富的功能，比如可以绑定更多的变量，从文件系统、网络加载代码等。
+        // Eval.me(symbol,object, expression) 只能绑定一个参数
+        GroovyShell shell = new GroovyShell()
+        shell.setVariable("age", 15)
+        shell.setVariable("sex", false)
+        def expression = 'if (age < 18 && !sex) {return "女未成年"} else {return "已成年"}'
+        println shell.evaluate(expression) // 直接求值
+
+        // 解析为脚本，延迟执行或者缓存起来
+        Script script = shell.parse(expression)
+        println script.run() // 脚本跑起来
+
+        shell.evaluate(URI.create("http://www.mocky.io/v2/5ebb9baf3600005fdef7e7df"))
+
+//        shell.evaluate(new File("d:/hello.groovy"))
+    }
 }
