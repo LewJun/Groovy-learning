@@ -531,4 +531,15 @@ class AppGroovyTest extends GroovyTestCase {
         println empAlias
         empAlias.fuck()
     }
+
+    /**
+     * metaClass的使用
+     */
+    void testMetaClass() {
+        String.metaClass.'static'.triple = {
+            return it * 3
+        }
+        println String.triple("abc")
+
+    }
 }
