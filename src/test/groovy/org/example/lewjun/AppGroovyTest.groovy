@@ -1,6 +1,9 @@
 package org.example.lewjun
 
+
+import com.google.gson.reflect.TypeToken
 import org.example.lewjun.Emp as EmpAlias
+import org.example.lewjun.util.GsonUtil
 
 import javax.script.Bindings
 import javax.script.ScriptEngine
@@ -632,4 +635,40 @@ class AppGroovyTest extends GroovyTestCase {
         println result
     }
 
+    void testParseJson() {
+        def jsonTxt = """
+{
+    "empno": 7369,
+    "ename": "Lucy"
+}
+"""
+
+        def emp = GsonUtil.fromJson(jsonTxt, new TypeToken<Emp>() {}.getType()) as Emp
+        println emp.display()
+
+        jsonTxt = """
+[
+{
+    "empno": 7369,
+    "ename": "Lucy"
+},
+{
+    "empno": 9999,
+    "ename": "King"
+}
+]
+"""
+//        List<Emp> empList = jsonSlurper.parseText(jsonTxt) as List<Emp>
+//        empList.each {
+////            println it.display()
+        // 用groovy的json解析方式，会出现如下异常信息，所以还是使用GSON吧
+//            //groovy.lang.MissingMethodException: No signature of method: org.apache.groovy.json.internal.LazyMap.display()
+//        }
+
+        def emps = GsonUtil.fromJson(jsonTxt, new TypeToken<List<Emp>>() {}.getType()) as List<Emp>
+        println emps
+        emps.each {
+            println it.display()
+        }
+    }
 }
