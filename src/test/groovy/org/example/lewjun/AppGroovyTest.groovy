@@ -542,4 +542,25 @@ class AppGroovyTest extends GroovyTestCase {
         println String.triple("abc")
 
     }
+
+    /**
+     * eval 的使用
+     */
+    void testEval() {
+        // groovy.util.Eval 类是最简单的用来在运行时动态执行 Groovy 代码的类，提供了几个静态工厂方法供使用，内部其实就是对GroovyShell的封装。
+        // 执行Groovy代码
+        def expression = "println 'hello world'"
+        Eval.me(expression)
+
+        // 绑定自定义参数
+        String result = Eval.me("age", 22, "if(age < 18) {return '未成年'} else { return '已成年'}")
+        println result
+
+        // 绑定一个名为x的参数，进行简单计算
+        println Eval.x(3, "x**2") // 9
+        println Eval.xy(3, 4, "x**2 + y**2") // 25
+        println Eval.xyz(3, 4, 5, "x**2 + y**2 == z**2") // true
+
+        println Eval.x("Hello world", "x.toUpperCase()") // HELLO WORLD
+    }
 }
