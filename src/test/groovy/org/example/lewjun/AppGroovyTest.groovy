@@ -670,5 +670,11 @@ class AppGroovyTest extends GroovyTestCase {
         emps.each {
             println it.display()
         }
+
+        emps*.hiredate = new Date()
+
+        println GsonUtil.toJson(emps)
+
+        println emps*.ename
     }
 }
