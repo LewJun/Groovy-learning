@@ -584,4 +584,18 @@ class AppGroovyTest extends GroovyTestCase {
 
 //        shell.evaluate(new File("d:/hello.groovy"))
     }
+
+    /**
+     * GroovyClassLoader的使用
+     */
+    void testGroovyClassLoader() {
+        // groovy.lang.GroovyClassLoader是一个定制的类加载器，可以在运行时加载 Groovy 代码，生成 Class 对象。
+        GroovyClassLoader groovyClassLoader = new GroovyClassLoader()
+
+        def script = "class Hello {def hello() {println 'hello'}; def world() {println 'world'}}"
+        Class clazz = groovyClassLoader.parseClass(script)
+        clazz.getMethod("hello").invoke(clazz.newInstance())
+        clazz.getMethod("world").invoke(clazz.newInstance())
+    }
+
 }
